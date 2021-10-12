@@ -10,12 +10,11 @@ contract committee is ERC20{
     uint256 interval;
     bool sucess;
     address _owner;
-    uint256 advanceFee = tokenAmount*5;
     uint256 intervalCount = 0;
     
     struct advanceFee{
         address newMember;
-        uint256 advanceFee = tokenAmount*5;
+        uint256 advanceFee;
      }
     struct committeeMembers{
         address member;
@@ -33,7 +32,7 @@ contract committee is ERC20{
     _;
   }
     function AdvanceFee(address _newMember,uint256 _advanceFee) external payable{
-        require(_advanceFee == AdvanceFee);
+        require(_advanceFee == tokenAmount*5);
         _transfer(_newMember,_owner,_advanceFee);
         entranceSecurity[] = advanceFee(_newMember,_advanceFee);
     }
