@@ -6,49 +6,65 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 contract committee is ERC20{
     
-    address payable owner;
-    uint256 tokenAmount;
+    uint256 tokenAmount = 100;
     uint256 interval;
+    bool sucess;
+    address _owner;
+    uint256 advanceFee = tokenAmount*5;
+    uint256 intervalCount = 0;
     
-    constructor(){
-        owner = msg.sender;
-        tokenAmount = 100;
-    }
-    
+    struct advanceFee{
+        address newMember;
+        uint256 advanceFee = tokenAmount*5;
+     }
     struct committeeMembers{
         address member;
         string name;
     }
     
     committeeMembers[] public committeeMember;
+    
+    mapping(address => advanceFee) public entranceSecurity;
     mapping(address => mapping(uint256 => bool)) paymentRecord;
     mapping(address => uint) numOfMembers;
     
     modifier onlyOwner() {
-    require(msg.sender == owner);
+    require(msg.sender == _owner);
     _;
   }
+    function AdvanceFee(address _newMember,uint256 _advanceFee) external payable{
+        require(_advanceFee == AdvanceFee);
+        _transfer(_newMember,_owner,_advanceFee);
+        entranceSecurity[] = advanceFee(_newMember,_advanceFee);
+    }
     
-    function addMembers(address _member, string memory _name) public onlyOwner{
+    function addMembers(address _member, string memory _name) public{
         require( numOfMembers[_member] <= 10);
+        require(transferFrom(_member,msg.sender,advanceFee));
         committeeMember.push(committeeMembers(_member,_name));
         numOfMembers[_member]++;
     }
     
-    function membersCommittee(address payable _member) external payable{
+    function membersCommittee(address _member,address payable _owner) external payable{
         require(tokenAmount == 100);
-        require(committeeMembers.member[_member] == true);
         require(paymentRecord[_member][tokenAmount] = false);
-        transferFrom(_member,owner,tokenAmount);
+        transferFrom(_member,_owner,tokenAmount);
         paymentRecord[_member][tokenAmount] = true;
     }
     
-    function payMembers(address payable _member, uint256 _committeeAmount) public payable onlyOwner{
+    function payMembers(address payable _member,address _owner ,uint256 _committeeAmount) public payable onlyOwner returns(bool){
         require( paymentRecord[_member][tokenAmount] == true);
         require(interval >= 30 days);
-        transferFrom(owner,_member,_committeeAmount);
+        transferFrom(_owner,_member,_committeeAmount);
         for(int i = 0; i<=10 ; i++){
-        paymentRecord[_member]+i[tokenAmount] = false;
+        paymentRecord[_member][_committeeAmount] = false;
+        intervalCount++;
+        if(intervalCount == 10){
+             for(int i = 0; i<=10 ; i++){
+                 transferFrom(msg.sender,_member,advanceFee);
+             }
+        }
+        return sucess;
     }
 } 
 }
