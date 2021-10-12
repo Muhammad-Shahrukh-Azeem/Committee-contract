@@ -1,5 +1,10 @@
 # Committee-contract
 This Contract is a committee saving contract.
-Includes an add member function to add members to a certain limit.
-A committee function which takes token as committee and save them to a user.
-A pay function which gives amount of tokens gathered to a specific user after a certain time.
+<li>Includes an add member function to add members to a certain limit.<\li>
+<li>Includes an add member function to add members to a certain limit.<\li>
+<li>A committee function which takes token as committee and save them to a user.<\li>
+<li>A pay function which gives amount of tokens gathered to a specific user after a certain time.<\li> 
+<li>A pay function which gives amount of tokens gathered to a specific user after a certain time.<\li>
+<li>This also includes a secuirty function which allows a safe measure that will ensure that a user wont run away after getting their amount
+  <li>A user have to deposit an adavnce fee to enter that will be saved in the contract and will be returned once the committee have ended <\li>
+    <\li>
